@@ -1,0 +1,4 @@
+command to check zombie processes:
+# ps aux | awk {'print $8'}|grep -c Z
+
+https://www.servernoobs.com/how-to-find-and-kill-all-zombie-processes/
