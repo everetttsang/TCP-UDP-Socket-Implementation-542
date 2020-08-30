@@ -1,4 +1,47 @@
-command to check zombie processes:
-# ps aux | awk {'print $8'}|grep -c Z
+EE542 - Lab 1 - Amjad Aryan & Everett Tsang
+------------------------------------------------
+The first lab operates very simply. A Makefile has been provided to make
+building the server and client files easily. An additional operation to remove
+the executables has been provided.
 
-https://www.servernoobs.com/how-to-find-and-kill-all-zombie-processes/
+1. Two LINUX machines connected to the same DHCP server must be obtained in order
+   for correct operation. Open a terminal in each of the machines.
+
+2. The server and the client both must be compiled and built into an executables
+   in order to run. Use the command 'make all' in both terminals.
+
+3. In one of the machines, the server must be started first. The command to run
+   the server requires a single parameter, the port number for which the client
+   should connect to. This can be done by using the command in the format:
+   './server <PORTNUMBER>'. It is recommended to use an available port within the
+   range 2000 and 65535. In the tutorial video, we use the port 3194. The PORTNUMBER
+   is arbitrary as long as it remains within the specified range above.
+
+4. Once the server is successfully running, the terminal should block. It is waiting
+   for a client connection. Start the client in the other machine. The command to
+   run the client requires two parameters, the IPv4 address of the machine running the
+   server (this should look like a number 192.XXX.XXX.X or can be replaced by localhost
+   if running on the same machine), and the PORTNUMBER that the client should connect to.
+   This PORTNUMBER is the same number which was specified when launching the server. The
+   start command for the server looks is in this format './client <HOST_IPv4> <PORTNUMBER>'.
+
+5. When the server has successfully connected to the client, the client will prompt the user
+   to enter a message. A message containing up to 256 letters is permitted. After inputting
+   the message, hit enter to send to the server. Once the server receives the message from the
+   client, the server will display the message and send an acknowledgement message back to the
+   client connection. Once the client receives the ACK message, the client process will terminate.
+
+6. The server runs on a continuous while loop, so it will continue to wait for client connections
+   until it is manually terminated using the command Ctrl+C. To test for the persistent operation
+   of the server, repeat step 5.
+
+The latter portion of the LAB is to reap zombie processes. In the current code
+in the server.c file line 30, the code is set to ignore the SIGCHLD signal, which
+effectively removes all zombie processes. In order to test whether this operation
+functioned correctly, we tested our client-server with this line with and without
+this line of code. In the tutorial video, it was shown that the client-server was
+run while repeating step 5 multiple times. Using the process status command
+'ps aux | awk {'print $8'}|grep -c Z', we saw that the server had 5 processes running.
+After including the ignore signal code, we re-ran the process and found that the server
+only had 1 process running, the current persistent server running in the infinite
+while loop.
