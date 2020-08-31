@@ -1,4 +1,5 @@
 EE542 - Lab 1 - Amjad Aryan & Everett Tsang
+Demonstration Video: https://youtu.be/WK1ZCaIpKU4
 ------------------------------------------------
 The first lab operates very simply. A Makefile has been provided to make
 building the server and client files easily. An additional operation to remove
@@ -37,9 +38,10 @@ the executables has been provided.
 
 The latter portion of the LAB is to reap zombie processes. In the current code
 in the server.c file line 30, the code is set to ignore the SIGCHLD signal, which
-effectively removes all zombie processes. In order to test whether this operation
-functioned correctly, we tested our client-server with this line with and without
-this line of code. In the tutorial video, it was shown that the client-server was
+effectively removes all zombie processes. Please note that by using the ignore
+SIGCHLD signal code, it might be necessary to include the signal.h dependency in the code.
+In order to test whether this operation functioned correctly, we tested our client-server
+with this line with and without this line of code. In the tutorial video, it was shown that the client-server was
 run while repeating step 5 multiple times. Using the process status command
 'ps aux | awk {'print $8'}|grep -c Z', we saw that the server had 5 processes running.
 After including the ignore signal code, we re-ran the process and found that the server
